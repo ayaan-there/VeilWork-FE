@@ -59,8 +59,8 @@ const fetchCountFromIndexer = async (contractAddress: string): Promise<bigint | 
         return null;
       }
       const contractState = CompactContractState.deserialize(hexToBytes(stateHex));
-      // Pass full contractState object; ledger() handles both StateValue and objects with .state at runtime
-      const ledgerState = CounterModule.ledger(contractState as any);
+      // contractState.data is the ChargedState; ledger() expects a StateValue or ChargedState
+      const ledgerState = CounterModule.ledger(contractState.data);
       return BigInt(ledgerState.count);
     } catch (e: any) {
       console.warn('[useMidnight] Indexer read failed:', e?.message ?? e);
