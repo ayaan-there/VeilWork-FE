@@ -199,7 +199,11 @@ const initializeProviders = async (
           'binding',
           fromHex(received.tx),
         );
-      } catch (e) {
+      } catch (e: any) {
+        const msg = e?.message ?? String(e);
+        const details = e?.data ? ` data=${JSON.stringify(e.data)}` : '';
+        console.error('[useMidnight] balanceTx via Lace failed:', msg + details);
+        if (e?.stack) console.error(e.stack);
         logger.error({ error: e }, 'balanceTx via wallet failed');
         throw e;
       }
