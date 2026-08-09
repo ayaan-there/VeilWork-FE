@@ -179,6 +179,10 @@ const initializeProviders = async (
     proofServerUri = LOCAL_PROVER;
   }
   const shieldedAddresses = await connectedAPI.getShieldedAddresses();
+  console.log('[useMidnight] shieldedAddresses:', JSON.stringify({
+    coin: shieldedAddresses?.shieldedCoinPublicKey,
+    enc: shieldedAddresses?.shieldedEncryptionPublicKey,
+  }));
   const zkConfigProvider = new FetchZkConfigProvider<string>(
     window.location.origin,
     fetch.bind(window),
@@ -190,9 +194,25 @@ const initializeProviders = async (
     getCoinPublicKey: () => shieldedAddresses.shieldedCoinPublicKey,
     getEncryptionPublicKey: () => shieldedAddresses.shieldedEncryptionPublicKey,
     balanceTx: async (tx: UnboundTransaction): Promise<FinalizedTransaction> => {
+      let serializedTx: string;
       try {
-        const serializedTx = toHex(tx.serialize());
-        const received = await connectedAPI.balanceUnsealedTransaction(serializedTx);
+        serializedTx = toHex(tx.serialize());
+      } catch (e: any) {
+        console.error('[useMidnight] balanceTx step1 tx.serialize failed:', e?.message ?? String(e));
+        if (e) console.error('raw:', e);
+        throw e;
+      }
+      let received: any;
+      try {
+        received = await connectedAPI.balanceUnsealedTransaction(serializedTx);
+      } catch (e: any) {
+        const info: any = { name: e?.name, message: e?.message, code: (e as any)?.code, ctor: e?.constructor?.name };
+        try { info.ownProps = Object.getOwnPropertyNames(e).map((k) => `${k}=${String((e as any)[k])}`); } catch { /* ignore */ }
+        console.error('[useMidnight] balanceTx step2 balanceUnsealed threw:', JSON.stringify(info));
+        if (e) console.error('raw error object:', e);
+        throw e;
+      }
+      try {
         return Transaction.deserialize<SignatureEnabled, Proof, Binding>(
           'signature',
           'proof',
@@ -200,11 +220,7 @@ const initializeProviders = async (
           fromHex(received.tx),
         );
       } catch (e: any) {
-        const msg = e?.message ?? String(e);
-        const details = e?.data ? ` data=${JSON.stringify(e.data)}` : '';
-        console.error('[useMidnight] balanceTx via Lace failed:', msg + details);
-        if (e?.stack) console.error(e.stack);
-        logger.error({ error: e }, 'balanceTx via wallet failed');
+        console.error('[useMidnight] balanceTx step3 Transaction.deserialize failed:', e?.message ?? String(e));
         throw e;
       }
     },
