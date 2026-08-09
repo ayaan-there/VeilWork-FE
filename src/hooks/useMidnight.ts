@@ -265,7 +265,15 @@ export function useMidnight(): UseMidnightReturn {
         } catch { /* ignore */ }
       }
     }
-    return new Uint8Array(32);
+    // Owner secret used at deployment time for the Preprod counter
+    // (see mn-demo .midnight-state.json counterDeployment.ownerSecret).
+    const defaultSecret = Uint8Array.from(
+      Buffer.from('5aed9628dcc2e7fea44dbceb6a901a432ef8749e0dacc7e952924b806f75f625', 'hex'),
+    );
+    try {
+      localStorage.setItem('veilwork:counterSecretKey', Buffer.from(defaultSecret).toString('hex'));
+    } catch { /* ignore */ }
+    return defaultSecret;
   };
 
   useEffect(() => {
