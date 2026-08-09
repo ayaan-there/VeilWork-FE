@@ -210,6 +210,18 @@ const initializeProviders = async (
         try { info.ownProps = Object.getOwnPropertyNames(e).map((k) => `${k}=${String((e as any)[k])}`); } catch { /* ignore */ }
         console.error('[useMidnight] balanceTx step2 balanceUnsealed threw:', JSON.stringify(info));
         if (e) console.error('raw error object:', e);
+        if (e && typeof e === 'object' && 'cause' in e) {
+          const c = (e as any).cause;
+          console.error('[useMidnight] balanceTx step2 cause (raw):', c);
+          try {
+            const cOwn = Object.getOwnPropertyNames(c).map((k) => `${k}=${String((c as any)[k])}`);
+            console.error('[useMidnight] balanceTx step2 cause ownProps:', JSON.stringify(cOwn));
+          } catch { /* ignore */ }
+          try { console.error('[useMidnight] balanceTx step2 cause JSON:', JSON.stringify(c, null, 2)); } catch { /* ignore */ }
+          if (c && typeof c === 'object' && 'cause' in c) {
+            console.error('[useMidnight] balanceTx step2 nested cause (raw):', (c as any).cause);
+          }
+        }
         throw e;
       }
       try {
