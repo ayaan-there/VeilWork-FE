@@ -251,6 +251,7 @@ export function useMidnight(): UseMidnightReturn {
   const connectedAPIRef = useRef<ConnectedAPI | null>(null);
   const providersRef = useRef<Providers | null>(null);
   const foundContractRef = useRef<any>(null);
+  const walletStateRef = useRef<WalletState>('detecting');
 
   const fetchOwnerSecret = (): Uint8Array => {
     if (typeof localStorage !== 'undefined') {
@@ -268,11 +269,16 @@ export function useMidnight(): UseMidnightReturn {
   };
 
   useEffect(() => {
+    walletStateRef.current = walletState;
+  }, [walletState]);
+
+  useEffect(() => {
     let cancelled = false;
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
     const detect = () => {
       if (cancelled) return;
+      if (walletStateRef.current === 'connecting' || walletStateRef.current === 'connected') return;
       const wallet = getFirstCompatibleWallet();
       if (wallet) {
         if (cancelled) return;
