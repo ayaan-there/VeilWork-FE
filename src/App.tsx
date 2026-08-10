@@ -61,6 +61,7 @@ const heroButtonStyle: React.CSSProperties = {
   padding: '14px 28px',
   background: '#6bcbff',
   color: '#0f0f1e',
+  transition: "transform 160ms ease-out",
   border: 'none',
   borderRadius: '10px',
   fontSize: '16px',
