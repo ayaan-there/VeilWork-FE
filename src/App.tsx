@@ -201,10 +201,23 @@ const App: React.FC = () => {
             style={{
               padding: '40px 20px',
               borderBottom: '1px solid var(--color-border)',
+              position: 'relative',
+              overflow: 'hidden',
+              isolation: 'isolate',
             }}
             className="hero-pad"
           >
-            <h1 className="display" style={{ color: 'var(--color-primary)', marginBottom: 16 }}>
+            <div className="hero-dither" aria-hidden />
+            <h1
+              className="display"
+              style={{
+                color: 'var(--color-primary)',
+                marginBottom: 16,
+                position: 'relative',
+                zIndex: 1,
+                mixBlendMode: 'difference',
+              }}
+            >
               PROVE WITHOUT REVEALING.
             </h1>
             <p
@@ -213,6 +226,8 @@ const App: React.FC = () => {
                 maxWidth: 540,
                 margin: 0,
                 lineHeight: 1.6,
+                position: 'relative',
+                zIndex: 1,
               }}
             >
               Prove a property of private input without exposing the input itself.
