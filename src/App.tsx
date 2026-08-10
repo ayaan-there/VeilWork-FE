@@ -108,7 +108,7 @@ const App: React.FC = () => {
               color: 'var(--color-primary)',
             }}
           >
-            ANONTY
+            ANONITY
           </span>
           <span
             className="caps"
@@ -216,7 +216,7 @@ const App: React.FC = () => {
               }}
             >
               Prove a property of private input without exposing the input itself.
-              ANONTY wraps a Midnight counter contract into a privacy-first
+              ANONITY wraps a Midnight counter contract into a privacy-first
               verification surface — ownership of a secret is proven via a
               zero-knowledge witness, never disclosed on-chain.
             </p>
@@ -814,7 +814,7 @@ const App: React.FC = () => {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <span className="caps" style={{ color: 'var(--color-on-tertiary-fixed-variant)' }}>
-            ANONTY / L2
+            ANONITY / L2
           </span>
         </div>
       </footer>
