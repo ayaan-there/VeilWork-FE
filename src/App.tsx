@@ -201,23 +201,10 @@ const App: React.FC = () => {
             style={{
               padding: '40px 20px',
               borderBottom: '1px solid var(--color-border)',
-              position: 'relative',
-              overflow: 'hidden',
-              isolation: 'isolate',
             }}
             className="hero-pad"
           >
-            <div className="hero-dither" aria-hidden />
-            <h1
-              className="display"
-              style={{
-                color: 'var(--color-primary)',
-                marginBottom: 16,
-                position: 'relative',
-                zIndex: 1,
-                mixBlendMode: 'difference',
-              }}
-            >
+            <h1 className="display" style={{ color: 'var(--color-primary)', marginBottom: 16 }}>
               PROVE WITHOUT REVEALING.
             </h1>
             <p
@@ -226,8 +213,6 @@ const App: React.FC = () => {
                 maxWidth: 540,
                 margin: 0,
                 lineHeight: 1.6,
-                position: 'relative',
-                zIndex: 1,
               }}
             >
               Prove a property of private input without exposing the input itself.
@@ -246,15 +231,21 @@ const App: React.FC = () => {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              isolation: 'isolate',
             }}
             className="hero-pad"
           >
+            <div className="panel-dither" aria-hidden />
             <div
               style={{
                 width: '100%',
                 maxWidth: '60rem',
                 background: 'var(--color-bg)',
                 border: '1px solid var(--color-border)',
+                position: 'relative',
+                zIndex: 1,
               }}
             >
               <div
@@ -263,6 +254,8 @@ const App: React.FC = () => {
                   borderBottom: '1px solid var(--color-border)',
                   background: 'var(--color-surface)',
                   textAlign: 'center',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 <p
@@ -287,6 +280,8 @@ const App: React.FC = () => {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   background: 'var(--color-surface)',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 <span className="caps" style={{ color: 'var(--color-primary)' }}>
@@ -309,6 +304,8 @@ const App: React.FC = () => {
                   gridTemplateColumns: 'minmax(0,1fr)',
                   gap: 1,
                   background: 'var(--color-border)',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
                 className="priv-grid"
               >
@@ -468,6 +465,8 @@ const App: React.FC = () => {
                   gap: 10,
                   flexWrap: 'wrap',
                   background: 'var(--color-bg)',
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 {!isConnected ? (
@@ -519,6 +518,8 @@ const App: React.FC = () => {
                 background: 'var(--color-bg)',
                 padding: '12px 16px',
                 gap: 16,
+                position: 'relative',
+                zIndex: 1,
               }}
               className="flow-wrap"
             >
@@ -635,6 +636,8 @@ const App: React.FC = () => {
                   fontFamily: 'var(--font-mono)',
                   fontSize: 12,
                   lineHeight: 1.55,
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 <span
@@ -660,6 +663,8 @@ const App: React.FC = () => {
                   border: '1px dashed var(--color-border)',
                   fontFamily: 'var(--font-mono)',
                   fontSize: 12,
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 <span className="caps-xs" style={{ marginRight: 8 }}>
@@ -682,6 +687,8 @@ const App: React.FC = () => {
                   border: '1px solid var(--color-border)',
                   fontFamily: 'var(--font-mono)',
                   fontSize: 12,
+                  position: 'relative',
+                  zIndex: 1,
                 }}
               >
                 <span className="caps-xs" style={{ marginRight: 8 }}>

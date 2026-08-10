@@ -267,17 +267,17 @@ button { font-family: inherit; }
   }
 }
 
-/* Dither wave effect for hero section — zero-dep, GPU-accelerated
+/* Dither wave effect behind verification panel — zero-dep, GPU-accelerated
    Layer 1: horizontal scanline dither (Bayer-ish via repeating gradient)
    Layer 2: diagonal purple sine-wave pattern, animated
    mix-blend-mode: screen lets it glow over the dark technical background
    without overpowering the headline */
-.hero-dither {
+.panel-dither {
   position: absolute;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.12;
+  opacity: 0.35;
   background-color: #080808;
   background-image:
     repeating-linear-gradient(
@@ -286,33 +286,33 @@ button { font-family: inherit; }
       rgba(124, 58, 237, 0.55) 1px,
       transparent 1px,
       transparent 3px
-    ),
+      ),
     repeating-linear-gradient(
       45deg,
       rgba(124, 58, 237, 0.18) 0,
       rgba(124, 58, 237, 0.18) 2px,
       transparent 2px,
       transparent 6px
-    ),
+      ),
     radial-gradient(
       ellipse at 30% 40%,
       rgba(124, 58, 237, 0.35) 0%,
       transparent 55%
-    ),
+      ),
     radial-gradient(
       ellipse at 70% 80%,
       rgba(96, 165, 250, 0.20) 0%,
       transparent 50%
-    );
+      );
   background-size: 100% 100%, 100% 100%, 50% 50%, 60% 60%;
   background-position: 0 0, 0 0, 0 0, 0 0;
   background-repeat: repeat, repeat, no-repeat, no-repeat;
   mix-blend-mode: screen;
-  animation: hero-dither-wave 6s linear infinite;
+  animation: panel-dither-wave 6s linear infinite;
   will-change: background-position;
 }
 
-@keyframes hero-dither-wave {
+@keyframes panel-dither-wave {
   0% {
     background-position:
       0 0,
@@ -337,9 +337,9 @@ button { font-family: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-dither {
+  .panel-dither {
     animation: none;
-    opacity: 0.05;
+    opacity: 0.18;
   }
 }
 
