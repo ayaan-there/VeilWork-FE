@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useMidnight } from './hooks/useMidnight';
 import TrueFocus from './components/TrueFocus';
 import DotField from './components/DotField';
@@ -17,8 +17,6 @@ const CONTRACT = (() => {
 const truncateHex = (s: string, head = 12, tail = 8): string =>
   s.length <= head + tail + 3 ? s : `${s.slice(0, head)}…${s.slice(-tail)}`;
 
-const SENTENCES = ['PROVE WITHOUT', 'REVEALING'];
-
 const App: React.FC = () => {
   const {
     walletState,
@@ -35,15 +33,6 @@ const App: React.FC = () => {
     error,
     clearError,
   } = useMidnight();
-
-  const [sentenceIndex, setSentenceIndex] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => {
-      setSentenceIndex((i) => (i + 1) % SENTENCES.length);
-    }, 4500);
-    return () => clearInterval(t);
-  }, []);
 
   useEffect(() => {
     if (!error) return;
@@ -217,16 +206,16 @@ const App: React.FC = () => {
             }}
             className="hero-pad"
           >
-            <div style={{ marginBottom: 24, marginTop: 8 }}>
+            <div style={{ marginBottom: 16 }}>
               <TrueFocus
-                key={sentenceIndex}
-                sentence={SENTENCES[sentenceIndex]}
-                manualMode={false}
+                sentence="PROVE WITHOUT REVEALING"
                 blurAmount={5}
                 borderColor="#00d97e"
                 glowColor="rgba(0, 217, 126, 0.55)"
                 animationDuration={0.55}
-                pauseBetweenAnimations={0.35}
+                pauseBetweenAnimations={0.3}
+                emphasisIndex={2}
+                emphasisPause={2.2}
               />
             </div>
             <p

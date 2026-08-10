@@ -5,43 +5,42 @@ import './TrueFocus.css';
 interface TrueFocusProps {
   sentence?: string;
   separator?: string;
-  manualMode?: boolean;
   blurAmount?: number;
   borderColor?: string;
   glowColor?: string;
   animationDuration?: number;
   pauseBetweenAnimations?: number;
-  onSentenceChange?: (next: string) => void;
+  emphasisIndex?: number;
+  emphasisPause?: number;
 }
 
 const TrueFocus = ({
-  sentence = 'True Focus',
+  sentence = 'PROVE WITHOUT REVEALING',
   separator = ' ',
-  manualMode = false,
   blurAmount = 5,
-  borderColor = 'green',
-  glowColor = 'rgba(0, 255, 0, 0.6)',
+  borderColor = '#00d97e',
+  glowColor = 'rgba(0, 217, 126, 0.55)',
   animationDuration = 0.5,
-  pauseBetweenAnimations = 1,
+  pauseBetweenAnimations = 0.35,
+  emphasisIndex = 2,
+  emphasisPause = 1.8,
 }: TrueFocusProps) => {
   const words = sentence.split(separator);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const wordRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const [focusRect, setFocusRect] = useState({ x: 0, y: 0, width: 0, height: 0 });
 
   useEffect(() => {
-    if (!manualMode) {
-      const interval = setInterval(
-        () => {
-          setCurrentIndex((prev) => (prev + 1) % words.length);
-        },
-        (animationDuration + pauseBetweenAnimations) * 1000,
-      );
-      return () => clearInterval(interval);
-    }
-  }, [manualMode, animationDuration, pauseBetweenAnimations, words.length]);
+    const baseInterval = (animationDuration + pauseBetweenAnimations) * 1000;
+    const interval = setInterval(
+      () => {
+        setCurrentIndex((prev) => (prev + 1) % words.length);
+      },
+      baseInterval,
+    );
+    return () => clearInterval(interval);
+  }, [animationDuration, pauseBetweenAnimations, words.length]);
 
   useEffect(() => {
     if (currentIndex === null || currentIndex === -1) return;
@@ -58,18 +57,14 @@ const TrueFocus = ({
     });
   }, [currentIndex, words.length]);
 
-  const handleMouseEnter = (index: number) => {
-    if (manualMode) {
-      setLastActiveIndex(index);
-      setCurrentIndex(index);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (manualMode && lastActiveIndex !== null) {
-      setCurrentIndex(lastActiveIndex);
-    }
-  };
+  // Auto cycle: dwell on emphasisIndex (REVEALING) longer than other words.
+  useEffect(() => {
+    if (currentIndex !== emphasisIndex) return;
+    const t = setTimeout(() => {
+      setCurrentIndex((prev) => (prev + 1) % words.length);
+    }, emphasisPause * 1000);
+    return () => clearTimeout(t);
+  }, [currentIndex, emphasisIndex, emphasisPause, words.length]);
 
   const frameStyle = {
     '--border-color': borderColor,
@@ -86,14 +81,12 @@ const TrueFocus = ({
             ref={(el) => {
               wordRefs.current[index] = el;
             }}
-            className={`focus-word ${manualMode ? 'manual' : ''} ${isActive && !manualMode ? 'active' : ''}`}
+            className={`focus-word ${isActive ? 'active' : ''}`}
             style={{
               filter: isActive ? 'blur(0px)' : `blur(${blurAmount}px)`,
               ...frameStyle,
               transition: `filter ${animationDuration}s ease`,
             }}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
           >
             {word}
           </span>
