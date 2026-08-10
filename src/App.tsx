@@ -722,7 +722,7 @@ const App: React.FC = () => {
               <PrivacyRow label="PUBLIC" filled />
               <PrivacyRow label="PRIVATE" filled={isConnected} />
               <PrivacyRow label="PROOF" filled={step2 === 'done' || step2 === 'active'} />
-              <PrivacyRow label="DISCLOSURE" filled={false} value="NONE" />
+              <PrivacyRow label="DISCLOSURE" filled={isConnected} value={isConnected ? 'NONE' : '–'} />
             </ul>
 
             <div
@@ -896,25 +896,16 @@ const PrivacyRow: React.FC<{ label: string; filled: boolean; value?: string }> =
       </span>
     ) : (
       <span
+        className="mono"
         style={{
-          width: 12,
-          height: 12,
-          border: `1px solid ${filled ? 'var(--color-primary)' : 'var(--color-border)'}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          fontSize: 14,
+          lineHeight: 1,
+          color: filled ? '#00d97e' : 'var(--color-on-tertiary-fixed-variant)',
+          opacity: filled ? 1 : 0.55,
+          transition: 'color 200ms var(--ease-out), opacity 200ms var(--ease-out)',
         }}
       >
-        {filled && (
-          <span
-            style={{
-              width: 6,
-              height: 6,
-              background: 'var(--color-primary)',
-              display: 'block',
-            }}
-          />
-        )}
+        {filled ? '✓' : '–'}
       </span>
     )}
   </li>
