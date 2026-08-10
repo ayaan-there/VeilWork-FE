@@ -1,18 +1,13 @@
 .focus-container {
   position: relative;
-  display: flex;
-  gap: 0.28em;
-  justify-content: flex-start;
-  align-items: baseline;
-  flex-wrap: wrap;
+  display: block;
   outline: none;
   user-select: none;
   width: 100%;
   line-height: 1.1;
 }
 
-.focus-word {
-  position: relative;
+.focus-group {
   font-family: var(--font-display, 'Geist', system-ui, sans-serif);
   font-size: clamp(28px, 5vw, 48px);
   font-weight: 700;
@@ -22,16 +17,29 @@
   color: var(--color-on-bg, #e6e6e6);
   cursor: default;
   transition:
-    filter 0.4s ease,
-    color 0.4s ease;
+    filter 0.45s ease,
+    color 0.45s ease;
   outline: none;
   user-select: none;
-  white-space: nowrap;
+  white-space: normal;
+  display: inline;
 }
 
-.focus-word.active {
+.focus-group + .focus-group {
+  margin-left: 0.28em;
+}
+
+.focus-group.active {
   filter: blur(0);
   color: var(--color-on-bg, #e6e6e6);
+}
+
+.focus-word {
+  display: inline;
+}
+
+.focus-word + .focus-word {
+  margin-left: 0.28em;
 }
 
 .focus-frame {

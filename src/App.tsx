@@ -208,14 +208,13 @@ const App: React.FC = () => {
           >
             <div style={{ marginBottom: 16 }}>
               <TrueFocus
-                sentence="PROVE WITHOUT REVEALING"
+                sentence="PROVE WITHOUT | REVEALING"
                 blurAmount={5}
                 borderColor="#00d97e"
                 glowColor="rgba(0, 217, 126, 0.55)"
                 animationDuration={0.55}
-                pauseBetweenAnimations={0.3}
-                emphasisIndex={2}
-                emphasisPause={2.2}
+                pauseBetweenGroups={3.2}
+                emphasisPause={0.9}
               />
             </div>
             <p
