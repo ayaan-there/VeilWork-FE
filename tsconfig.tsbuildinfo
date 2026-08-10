@@ -1,1 +1,0 @@
-{"root":["./src/App.tsx","./src/main.tsx","./src/test-data.ts","./src/components/CircuitCall.tsx","./src/components/WalletConnect.tsx","./src/hooks/useMidnight.ts","./src/lib/counter-contract.ts","./src/lib/in-memory-private-state-provider.ts"],"version":"5.9.3"}

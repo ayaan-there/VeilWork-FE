@@ -2,6 +2,7 @@ import { Buffer } from 'buffer';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import './index.css';
 
 (globalThis as any).Buffer = (globalThis as any).Buffer || Buffer;
 
