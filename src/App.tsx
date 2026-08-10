@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useMidnight } from './hooks/useMidnight';
 import TrueFocus from './components/TrueFocus';
+import DotField from './components/DotField';
 
 const NETWORK = (() => {
   const v = import.meta.env.VITE_NETWORK_ID as string | undefined;
@@ -252,9 +253,21 @@ const App: React.FC = () => {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
+              position: 'relative',
+              overflow: 'hidden',
+              isolation: 'isolate',
             }}
             className="hero-pad"
           >
+            <DotField
+              dotRadius={1.4}
+              dotSpacing={11}
+              cursorRadius={380}
+              bulgeStrength={48}
+              glowRadius={130}
+              gradientFrom="rgba(124, 58, 237, 0.55)"
+              gradientTo="rgba(96, 165, 250, 0.30)"
+            />
             <div
               style={{
                 width: '100%',

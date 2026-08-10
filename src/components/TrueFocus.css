@@ -14,9 +14,11 @@
 .focus-word {
   position: relative;
   font-family: var(--font-display, 'Geist', system-ui, sans-serif);
-  font-size: clamp(2.6rem, 7vw, 5.5rem);
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  text-transform: uppercase;
   color: var(--color-on-bg, #e6e6e6);
   cursor: pointer;
   transition:
