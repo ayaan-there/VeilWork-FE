@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useMidnight } from './hooks/useMidnight';
+import TrueFocus from './components/TrueFocus';
 
 const NETWORK = (() => {
   const v = import.meta.env.VITE_NETWORK_ID as string | undefined;
@@ -14,6 +15,8 @@ const CONTRACT = (() => {
 
 const truncateHex = (s: string, head = 12, tail = 8): string =>
   s.length <= head + tail + 3 ? s : `${s.slice(0, head)}…${s.slice(-tail)}`;
+
+const SENTENCES = ['PROVE WITHOUT', 'REVEALING'];
 
 const App: React.FC = () => {
   const {
@@ -31,6 +34,15 @@ const App: React.FC = () => {
     error,
     clearError,
   } = useMidnight();
+
+  const [sentenceIndex, setSentenceIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      setSentenceIndex((i) => (i + 1) % SENTENCES.length);
+    }, 4500);
+    return () => clearInterval(t);
+  }, []);
 
   useEffect(() => {
     if (!error) return;
@@ -204,9 +216,18 @@ const App: React.FC = () => {
             }}
             className="hero-pad"
           >
-            <h1 className="display" style={{ color: 'var(--color-primary)', marginBottom: 16 }}>
-              PROVE WITHOUT REVEALING.
-            </h1>
+            <div style={{ marginBottom: 24, marginTop: 8 }}>
+              <TrueFocus
+                key={sentenceIndex}
+                sentence={SENTENCES[sentenceIndex]}
+                manualMode={false}
+                blurAmount={5}
+                borderColor="#00d97e"
+                glowColor="rgba(0, 217, 126, 0.55)"
+                animationDuration={0.55}
+                pauseBetweenAnimations={0.35}
+              />
+            </div>
             <p
               style={{
                 color: 'var(--color-on-surface-variant)',
@@ -231,21 +252,15 @@ const App: React.FC = () => {
               flexDirection: 'column',
               alignItems: 'center',
               justifyContent: 'center',
-              position: 'relative',
-              overflow: 'hidden',
-              isolation: 'isolate',
             }}
             className="hero-pad"
           >
-            <div className="panel-dither" aria-hidden />
             <div
               style={{
                 width: '100%',
                 maxWidth: '60rem',
                 background: 'var(--color-bg)',
                 border: '1px solid var(--color-border)',
-                position: 'relative',
-                zIndex: 1,
               }}
             >
               <div
